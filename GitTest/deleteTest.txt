@@ -1,1 +1,0 @@
-Testing committing deleted files using git rm
