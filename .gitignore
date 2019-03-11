@@ -8,8 +8,10 @@
 
 !*.*
 
+/*
+
 #Except
-!*.cpp
+!/*.cpp
 !.gitignore
 
 # User-specific files
