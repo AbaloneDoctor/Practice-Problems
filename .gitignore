@@ -10,6 +10,8 @@
 
 !/**
 
+*.
+
 #Except
 !/*.cpp
 !.gitignore
