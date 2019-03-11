@@ -37,7 +37,7 @@ string intToRoman(int num) {
 
 		/*
 		//NOTE: you cannot use relational operators (like > < == ) in switch statements. 
-		//In this case we wanted to do a catchall for places > 4, and could'nt do it directly
+		//In this case we wanted to do a catchall for places > 4, and couldn't do it directly
 		//BUT it can be done with a default case!!
 		switch (places) {
 		case 1:
