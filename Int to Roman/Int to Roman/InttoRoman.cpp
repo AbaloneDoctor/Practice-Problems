@@ -18,6 +18,26 @@ D             500
 M             1000
 */
 
+
+//more succint code. Run time is O(9*4), or constant, can max run 9 times per
+
+string intToRoman2(int num) {
+	string result;
+	vector<string> romLetter = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+	vector<int> romanNum = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9 , 5, 4 , 1};
+
+	int target = num;
+	for (int i = 0; i < 13; i++) {
+		while (target >= romanNum[i]) {
+			target -= romanNum[i];
+			result += romLetter[i];
+		}
+	}
+
+	return result;
+}
+
+
 //idea iterate through number, for each digit, put appropriate numeral
 //Runs at O(N) size, N being the # of places in given number
 
@@ -122,7 +142,8 @@ int main()
 		}
 
 		int numInt = stoi(num);
-		cout << intToRoman(numInt) << endl;
+		//cout << intToRoman(numInt) << endl;
+		cout << intToRoman2(numInt) << endl;
 	}
 
 	cin.get();
