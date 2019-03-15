@@ -6,15 +6,16 @@
 
 #Ignore everything
 *
-
-#I'm not really sure what happened, but its git isn't bothering about the other project files
-#!*/#!/**#*.
-
 #Except
 !*.cpp
 !/*.cpp
 !/*/*.cpp
 !.gitignore
+
+#I'm not really sure what happened, but its git isn't bothering about the other project files
+#!*/#!/**#*.
+
+
 
 # User-specific files
 *.suo
