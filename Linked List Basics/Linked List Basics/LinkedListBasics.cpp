@@ -17,21 +17,50 @@ struct node {
 };
 
 class linkedList {
-private: 
+private:
 	node *head, *tail;
 public:
-	linkedList() {
+	linkedList();
+	~linkedList();
+	void printHeadTail();
+	void printNodes();
+	void insertAtStart(int val);
+	void insertAtTail(int val);
+	void deleteAtPosition(int pos);
+	void deleteHead();
+	void deleteTail();
+
+	void insertAtPosition(int val, int pos);
+	void insertAtPositionOLD(int pos, int val);		//for comparing/learning. Used a trailing slowItr that was set to fastItr every loop	
+	
+	void generateList(vector<int> arr);
+	void generateList2(vector<int> arr);			//for comparing/learning. Done in iterator/auto type of for loop
+};
+	linkedList::linkedList() {
 		head = NULL;
 		tail = NULL;
 	}
 	
-	void printHeadTail() {
+	//need destructor because we're using pointers
+	linkedList::~linkedList() {
+		node *itr;
+		while (head) {
+			itr = head;
+			head = head->next;
+			delete itr; 
+		}
+		delete head;
+		//delete tail;			//tail should be deleted by itr. Will crash if you try to delete a mem loc twice
+		cout << "Linked list deleted" << endl;
+	}
+
+	void linkedList::printHeadTail() {
 		cout << "head: " << head->value << endl;
 		cout << "tail: " << tail->value << endl;
 	}
 
 	//Updated 3/14
-	void insertAtPosition( int val , int pos) {		
+	void linkedList::insertAtPosition( int val , int pos) {		
 		node *itrSlow = new node();
 		itrSlow->next = head;
 		node *itrFast = head;
@@ -39,9 +68,9 @@ public:
 		insertee->value = val;
 
 		int counter = 0;
-		while (counter < pos && itrFast) {
-			itrSlow = itrSlow->next;
-			itrFast = itrFast->next;
+		while (counter < pos && itrFast) {			//ends one later than deleteAtPosition
+			itrSlow = itrSlow->next;				//deleting needs to stop at second to last to delete last
+			itrFast = itrFast->next;				//to insert at end, you can go all the way to the end
 			counter++;
 		}
 		
@@ -63,7 +92,7 @@ public:
 	//Decrepit code for learning
 	//initial idea was to set itrSlow to itrFast, then move itrFast forward to keep itrSlow tailing itrFast
 	//but this allows for collision of the 2 itr's 
-	void insertAtPositionOLD(int pos, int val) {
+	void linkedList::insertAtPositionOLD(int pos, int val) {
 		//currently doesn't account for if pos > arr.size
 
 		//previous implementation, sets itrfast to head, and itrslow is looped and set
@@ -93,14 +122,14 @@ public:
 	}
 
 
-	void insertAtStart( int val ) {
+	void linkedList::insertAtStart( int val ) {
 		node *insertee = new node();  
 		insertee->value = val;
 		insertee->next = head;
 		head = insertee;
 	}
 
-	void insertAtTail( int val ) {
+	void linkedList::insertAtTail( int val ) {
 		node *insertee = new node();
 		insertee->value = val;
 		insertee->next = NULL;
@@ -109,22 +138,22 @@ public:
 	}
 
 	//goal, delete at pos, if pos > arr.size(), delete last element
-	void deleteAtPosition( int pos ) {				//itrSlow is ptr to node before deleted node
+	void linkedList::deleteAtPosition( int pos ) {		//itrSlow is ptr to node before deleted node
 		node *itrSlow = new node();
 		itrSlow->next = head;
 		node *itrFast = head;						
 
 		int counter = 0;
-		while (counter < pos && itrFast->next) {
-			itrSlow = itrSlow->next;
-			itrFast = itrFast->next;
+		while (counter < pos && itrFast->next) {		//compared to insertAtPosition, it ends 1 node sooner
+			itrSlow = itrSlow->next;					//deleting needs means you need to stop at second to last 
+			itrFast = itrFast->next;					//inserting means you can go all the way to last
 			counter++;
 		}
 
-		if ( itrFast == head ) {					//in case of head/ pos == 0, itrSlow is never set to anything. 
+		if ( itrFast == head ) {						//in case of head/ pos == 0, itrSlow is never set to anything. 
 			head = itrFast->next;
 		}
-		if( counter < pos - 1){						//in case of pos > arr.size()
+		if( counter < pos - 1){							//in case of pos > arr.size()
 			tail = itrSlow;
 		}
 
@@ -133,13 +162,13 @@ public:
 	}
 
 
-	void deleteHead() {
+	void linkedList::deleteHead() {
 		node *temp = head->next;
 		delete head;
 		head = temp;
 	}
 
-	void deleteTail() {
+	void linkedList::deleteTail() {
 
 		node *itrSlow = new node();
 		itrSlow->next = head;
@@ -157,7 +186,7 @@ public:
 		
 	}
 
-	void printNodes() {
+	void linkedList::printNodes() {
 		node *temp = head; 
 		while(temp){							//when i was using delete, this would crash when reached end
 			cout << temp->value << " ";			//used to crash because end of linked list was not properly set to NULL
@@ -167,7 +196,7 @@ public:
 		cout << endl;
 	}
 
-	void generateList(vector<int> arr) {
+	void linkedList::generateList(vector<int> arr) {
 		head = new node();
 		tail = new node();
 	
@@ -187,25 +216,24 @@ public:
 
 	//practice for different for loops. Same result as generateList(vector<int> arr){}
 	//generate list using for ( : ) instead of for( int i = 0 ...)
-	void generateList2(vector<int> arr) {
+	void linkedList::generateList2(vector<int> arr) {
 		//different from the other for method because you can't generate head's value beforehand and start at arr[1]
 		//you essentially have to start at arr[0], so you set the value before doing itr=itr->next
 		//difference is that on arr[ lastMemner] you have to not add itr->next = new node()
 
-		head = new node();
+		head = new node();						//need to start with a new node that'll exist in memory 
 		node *itr = head;
-		//itr->value = arr[i];
 		for (int i : arr) {
 			itr->value = i;
-			if( i != arr.back() ){
+			if( i != arr.back() ){				//stops making next node at last member
 				itr->next = new node();
 				itr = itr->next;
 			}
 		}
-		tail = itr;		//at last
+		tail = itr;								//at last (don't need to create new node for tail, its created in above loop)
 	}
 		
-};
+
 
 
 
@@ -249,6 +277,8 @@ void linkedListSol() {
 
 	list.printNodes();
 	list.printHeadTail();
+
+	//list.~linkedList();			//destructor is automatically called, so don't need to call again
 	
 }
 
@@ -256,16 +286,13 @@ void linkedListSol() {
 
 int main()
 {
-
 	int repeat = 1;
 	do {
 		linkedListSol();
-		
-		cout << endl << "Repeat: 1, end: 0" << endl;
+		cout << endl << "Again? Repeat: 1, end: 0" << endl;
 		cin >> repeat; 
 		cout << endl;
-		if (!isdigit(repeat)) break;
-
+		if (cin.fail())break;	//checks if is num or not by comparing with repeat
 	} while (repeat == 1);
 
     return 0;
