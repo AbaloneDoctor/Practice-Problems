@@ -132,7 +132,8 @@ string intToRoman(int num) {
 int main()
 {
 	string num;
-	while (num != "end" ) {
+	cout << "Input numbers to convert to Roman Numeral. Input \"end\" to end program" << endl;
+	while ( 1 ) {
 		cin >> num;
 
 		for (auto it : num) {
