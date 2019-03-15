@@ -9,6 +9,7 @@
 #Except
 !*.cpp
 !.gitignore
+*stdafx.cpp
 
 #include even if they are in subdirectories
 !*/
