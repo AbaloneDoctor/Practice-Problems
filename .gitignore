@@ -22,7 +22,7 @@
 #	it IS a subfolder, so no slash in front
 *GitTest/
 *ignoreTest/
-*/test.txt
+#*/test.txt
 
 
 
