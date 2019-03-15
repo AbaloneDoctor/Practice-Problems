@@ -257,13 +257,14 @@ void linkedListSol() {
 int main()
 {
 
-	bool repeat = 1;
+	int repeat = 1;
 	do {
 		linkedListSol();
 		
 		cout << endl << "Repeat: 1, end: 0" << endl;
 		cin >> repeat; 
 		cout << endl;
+		if (!isdigit(repeat)) break;
 
 	} while (repeat == 1);
 
