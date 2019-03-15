@@ -14,7 +14,7 @@
 #include even if they are in subdirectories
 !*/
 
-*/GitTest/test2.cpp
+*GitTest/test2.cpp
 
 # User-specific files
 *.suo
