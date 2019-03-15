@@ -5,7 +5,7 @@
 
 
 #Ignore everything
-*
+/*
 
 #I'm not really sure what happened, but its git isn't bothering about the other project files
 #!*/#!/**#*.
