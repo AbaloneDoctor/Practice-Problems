@@ -5,7 +5,7 @@
 
 #Source for initial reading: https://stackoverflow.com/questions/987142/make-gitignore-ignore-everything-except-a-few-files
 #Source for including subdirectories: https://stackoverflow.com/questions/987142/make-gitignore-ignore-everything-except-a-few-files
-
+#git check-ignore -v [pathname] to check which filter is ignoring it
 
 #Ignore everything
 *
