@@ -14,6 +14,8 @@
 #include even if they are in subdirectories
 !*/
 
+#Note: */GitTest/test2.cpp does not work because GitTest is not a subdirectory of a subfolder in root (Practice-Problems)
+#	it IS a subfolder, so no slash in front
 *GitTest/test2.cpp
 
 # User-specific files
