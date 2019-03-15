@@ -27,7 +27,7 @@ public:
 	
 	void printHeadTail() {
 		cout << "head: " << head->value << endl;
-		cout << "tail :" << tail->value << endl;
+		cout << "tail: " << tail->value << endl;
 	}
 
 	//Updated 3/14
@@ -39,7 +39,7 @@ public:
 		insertee->value = val;
 
 		int counter = 0;
-		while (counter < pos && itrFast->next) {
+		while (counter < pos && itrFast) {
 			itrSlow = itrSlow->next;
 			itrFast = itrFast->next;
 			counter++;
@@ -50,15 +50,16 @@ public:
 		insertee->next = itrFast;
 
 		if (itrFast == head) {				//inserted at head, repoint head
-			head = itrSlow;
+			//head = itrSlow;				//<< this is wrong, itrSlow points to the head, it isn't the head
+			head = insertee;
+			delete itrSlow;
 		}
-
-		if (!itrFast->next) {				//inserted after tail, repoint tail
+		if (!itrFast) {						//inserted after tail, repoint tail
 			tail = itrFast;
 		}
 	}
 
-	//circa March 13
+	//circa pre 3/13
 	//Decrepit code for learning
 	//initial idea was to set itrSlow to itrFast, then move itrFast forward to keep itrSlow tailing itrFast
 	//but this allows for collision of the 2 itr's 
@@ -111,7 +112,6 @@ public:
 	void deleteAtPosition( int pos ) {				//itrSlow is ptr to node before deleted node
 		node *itrSlow = new node();
 		itrSlow->next = head;
-		delete itrSlow;
 		node *itrFast = head;						
 
 		int counter = 0;
@@ -185,7 +185,7 @@ public:
 	}
 
 
-	//practice for different for loops
+	//practice for different for loops. Same result as generateList(vector<int> arr){}
 	//generate list using for ( : ) instead of for( int i = 0 ...)
 	void generateList2(vector<int> arr) {
 		//different from the other for method because you can't generate head's value beforehand and start at arr[1]
@@ -215,110 +215,57 @@ void linkedListSol() {
 	list.printNodes();
 	int deleteAt;
 
-	cin >> deleteAt;
-	list.deleteAtPosition(deleteAt);
-
-	list.printNodes();
-
-	cin >> deleteAt;
-	list.deleteAtPosition(deleteAt);
 	
 
-
-	list.insertAtTail(7);
+	cout << "insert 0 at start" << endl;
+	list.insertAtStart(0);
 	list.printNodes();
+	
 
-	list.insertAtStart(9);
+	cout << "insert 6 at tail" << endl;
+	list.insertAtTail(6);
 	list.printNodes();
-
-	list.insertAtPosition(9, 3);
-
-	list.printNodes();
-
-	list.deleteTail();
+	
 	list.printHeadTail();
+
+	cout << "insert number at position" << endl;
+	int insertee;
+	int insertAt;
+	cout << "number: ";
+	cin >> insertee;
+	cout << "position: ";
+	cin >> insertAt;
+	list.insertAtPosition(insertee, insertAt);
 	list.printNodes();
+
+	cout << "delete at position:" << endl;
+	cin >> deleteAt;
+	list.deleteAtPosition(deleteAt);
+	list.printNodes();
+
+	cout << "delete head and tail" << endl;
+	list.deleteHead();	
+	list.deleteTail();
+
+	list.printNodes();
+	list.printHeadTail();
+	
 }
 
 
-void nodeTest() {
-
-	node first;
-	first.value = 1;
-
-
-	node second;
-	second.value = 2;
-
-	node *third = new node();
-	third->value = 3;
-
-	first.next = &second;
-	second.next = third;
-
-	node *temp = new node();
-
-
-	//temp = &first;
-	//first.next = temp;
-	temp = first.next;
-	//*temp = *third;
-
-
-	cout << "temp: " << temp->value << endl;
-	//temp = temp->next;
-	cout << "temp moved to next: " << temp->value << endl;
-	cout << "pointer test" << endl;
-
-	cout << "first value: " << first.value;
-	cout << ", second value: " << second.value;
-	cout << ", third value: " << third->value << endl;
-
-	cout << "first next: " << first.next->value;
-	cout << ", second next: " << second.next->value;
-	cout << ", third next: " << third->next->value << endl;
-}
 
 int main()
 {
-	 
-	//void pointers();
 
-	/*
-	char a = 'a';
-	char b = 'b';
-	char c = 'c';
+	bool repeat = 1;
+	do {
+		linkedListSol();
+		
+		cout << endl << "Repeat: 1, end: 0" << endl;
+		cin >> repeat; 
+		cout << endl;
 
-	char *ptr;
-	char *ptr2;
-	ptr = &a;					//bind ptr to a
-	//ptr = &b;	// set a to b		
-	//ptr = &c;	//set a to c
-
-	
-	*ptr = b;					//set value at a to b
-	cout << "a: " << a << ", b: " << b << ", c: " << c << endl;
-
-	*ptr = c;					//set value at a to b
-	cout << "a: " << a << ", b: " << b << ", c: " << c << endl;
-
-	ptr2 = ptr;					//ptr2 now controls ptr which controls a
-	*ptr2 = b;					//set value at ptr2 pointee to b
-
-	cout << "a: " << a << ", b: " << b << ", c: " << c <<  ", ptr: " << *ptr << ", ptr2: " << *ptr2 <<endl;
-
-	*/
-	
-
-	linkedListSol();
-
-
-	//temp = first.next;
-	//cout << "first.next" << temp->value << endl;
-
-	cin.get();
-	cin.get();
-
+	} while (repeat == 1);
 
     return 0;
 }
