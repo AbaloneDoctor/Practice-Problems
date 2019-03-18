@@ -21,6 +21,7 @@ while n > 0 { n % 26, push front; n/=26; }
 */
 
 string convertToTitleDivision( int n ) {
+	//Because we're checking if remainder == 0 == z, we use "Z" for titles[0] 
 	vector<string> titles = { "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y" };
 	string res;
 	//int divisor = 26;
