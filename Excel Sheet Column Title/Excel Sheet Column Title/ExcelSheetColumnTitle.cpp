@@ -1,6 +1,6 @@
 // ExcelSheetColumnTitle.cpp : Defines the entry point for the console application.
 //	Given an integer, return its column title. Eg 1->A.. 26->Z, 27->AA
-//	Note: you should be able to convert from one to another, AA = 1*26 + 1 = 27
+//	Note: you should be able to convert from one to another, AA = 1*26^1 (26) + 1*26^0 (1)= 27
 
 #include "stdafx.h"
 #include <iostream>
@@ -39,10 +39,11 @@ string convertToTitleDivision( int n ) {
 	return res;
 }
 
-
+//Loops for user input numbers
 void convertToTitleDEMO() {
 	int input = 1;
 	while (input != 0) {
+		cout << "Input number to convert to title: ";
 		cin >> input;
 		cout << convertToTitleDivision(input) << endl;
 	}
@@ -50,9 +51,11 @@ void convertToTitleDEMO() {
 
 //Prints all combinations from 0 to 9999
 void convertPrintAllDemo() {
+	cout << "Printing titles for 0-9999:" << endl;
 	for (int i = 0; i < 1000; i++) {
 		cout << convertToTitleDivision(i) <<" ";
 	}
+	cin.get();
 }
 
 int main()
