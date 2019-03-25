@@ -4,9 +4,12 @@
 #include "stdafx.h"
 #include <iostream>
 #include <vector>
+#include <math.h>
+#include <string>
 
 using namespace std;
 
+void printArray(vector<int> arr);
 // Definition for a binary tree node.
 struct TreeNode {
 	int val;
@@ -51,6 +54,7 @@ public:
 		return node;
 	}
 
+	//Prints tree in recursive/visit order
 	void printTree( TreeNode* node) {
 		//cout << "print" << endl;
 		if (node){
@@ -63,33 +67,89 @@ public:
 		}
 	}
 	
-	//not working properly	FINISH THIS
-	void printTreeInOrder(TreeNode* node) {
-		if (!node) return;
-		else {
-			cout << node->val << " ";
-			printTree(node->left);
-			printTree(node->right);
+
+	//EXTRA: visually prints tree
+	void printTreeVisual( vector<int> arr ) {
+		
+		//using array length, you know how deep and wide the tree is, print according to that
+		//height is equal to log2(array size rounded down)
+
+		
+		int height = log2(arr.size());
+		height++;														//add 1 for head node
+		float log2Height = log2(arr.size());							//check for when incomplete levels
+		if (log2Height > height) height++;				
+		cout << "height: " << height << endl;
+		int leadingSpaces = (height/3)*pow(2,(height-1))+(height/3);	//basic idea is 2^height - 1 for leading spaces
+		int intraSpaces = (height/3)*pow(2,height);						//2^height for spaces; higher level, more spaces
+		
+		int itr = 0;
+		for (int i = 0; i < height; i++) {								//iterate through every level of tree
+			for (int k = 0; k < leadingSpaces; k++) {					//print leading spaces
+				cout << " ";		
+			}
+			leadingSpaces/=2;											//reduce leading spaces for next level
+	
+			for (int j = 0; j < pow(2, i); j++) {						//iterate through each node in level
+				if (itr < arr.size()) {									//add leading zero for 0-9
+					if (arr[itr] < 10)cout << " ";
+					cout << arr[itr];
+					for (int l = 0; l < intraSpaces; l++) cout << " ";	//spaces between nodes in rows
+					itr++;												//iterates through array
+				}
+			}
+			cout << endl;
+			intraSpaces--;
+			intraSpaces/=2 ;
 		}
 	}
 
 };
+
+
+
+void printArray(vector<int> arr) {
+	for (int itr : arr) cout << itr << " ";
+	cout << endl;
+}
+
+
+void printTreeDemo() {
+	Solution sol;
+	TreeNode* tree = new TreeNode(0);
+	vector<int> arr = { 0,1,2,3,4,5,6 };
+	vector<int> arr2 = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 };
+	vector<int> arr3 = { 
+		1, 1, 1, 1 , 1 , 1, 1, 1, 1 , 1,1, 1, 1, 1 , 1 , 1, 1, 1, 1 , 1, 
+		1, 1, 1, 1 , 1 , 1, 1, 1, 1 , 1,1, 1, 1, 1 , 1 , 1, 1, 1, 1 , 1 ,
+		1, 1, 1, 1 , 1 , 1, 1, 1, 1 , 1,1, 1, 1, 1 , 1 , 1, 1, 1, 1 , 1 ,
+		1, 1, 1, 1 , 1 , 1, 1, 1, 1 , 1,1, 1, 1, 1 , 1 , 1, 1, 1, 1 , 1 };
+
+	sol.printTreeVisual(arr);
+	cin.get();
+}
+
+
 
 void isSameTreeDEMO() {
 	
 	Solution sol;
 
 	TreeNode *first = new TreeNode(0); 
-	first = sol.generateTree({ 0,1,2,3,4,5,6, 7 }, 0, first);
+	vector<int> firstTreeArr = { 0,1,2,3,4,5,6};
+	first = sol.generateTree( firstTreeArr, 0, first);
 	TreeNode *second = new TreeNode(1); 
-	second = sol.generateTree({ 0,1,2,3,4,5, 7, 6 }, 0, second);
+	vector<int> secondTreeArr = { 0,1,2,3,4,5, 6 };
+	second = sol.generateTree(secondTreeArr, 0, second);
 	
-	sol.printTree(first);
+	sol.printTreeVisual(firstTreeArr);
 	cout << endl;
-	sol.printTree(second);
+	sol.printTreeVisual(secondTreeArr);
 	cout << endl;
-	cout << sol.isSameTree(first, second);
-
+	
+	string res;
+	(sol.isSameTree(first, second))? res = "true" : res = "false";
+	cout << res;
 	cin.get();
 
 }
@@ -97,6 +157,7 @@ void isSameTreeDEMO() {
 int main()
 {
 	isSameTreeDEMO();
+	//printTreeDemo();
     return 0;
 }
 
