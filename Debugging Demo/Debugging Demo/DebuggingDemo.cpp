@@ -55,7 +55,7 @@ int main()
 	stepOver(num);
 	add100(a);						//shift+f9, quickWatch, can evaluate functions with return value:		
 									//add100(a+2)	= 117	//a was originally 115
-
+									//can call add100(add100(2))	//returns 202
 	stack1();
 
 	cin.get();
