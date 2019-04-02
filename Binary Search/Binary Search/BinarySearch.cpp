@@ -44,9 +44,8 @@ int binarySearch2(int A[], int left, int right, int x) {					//returns index whe
 																			//if you don't return a true/value during recursion
 }
 
-int binarySearchIterative(int A[], int x, int size) {
+int binarySearchIterative(int A[], int x, int right) {
 	//int right = sizeof(A)/sizeof(*A);
-	int right = size - 1;
 	int left = 0;
 	while (right >= left) {
 		int mid = left + (right - left) / 2;
@@ -71,7 +70,7 @@ int main()
 	int arr[] = { 3, 3,3,3,3,4, 7, 8, 9 , 10, 11};
 	//bool res = binarySearch(arr, 0, 9, 2);
 	//int res = binarySearch2(arr, 0, 10, 11);
-	int res = binarySearchIterative(arr, 9, 11);
+	int res = binarySearchIterative(arr, 9, 10);
 	cout << res;
 
 	cin.get();
