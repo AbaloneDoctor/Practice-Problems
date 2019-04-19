@@ -18,13 +18,15 @@ vector<string> commonChars(vector<string>& A) {
 		}
 		hashArray.push_back(hash);
 	}
-	finalCount = hashArray[0];
-	for (vector<int> vectItr : hashArray) {
 
-		for (int intItr : vectItr) {
-			if (finalCount[intItr] > vectItr[intItr]) { finalCount[intItr] = vectItr[intItr]; }
+	finalCount = hashArray[0];
+
+	for (int i = 0; i < hashArray.size(); i++) {
+		for (int j = 0; j < hashArray[i].size(); j++) {
+			if (finalCount[j] > hashArray[i][j]) { finalCount[j] = hashArray[i][j]; }
 		}
 	}
+
 	for (int j = 0; j < finalCount.size(); j++) {
 		for (int i = 0; i < finalCount[j]; i++) {
 			char temp = j + 'a';
@@ -38,8 +40,9 @@ vector<string> commonChars(vector<string>& A) {
 
 int main()
 {
-	vector<string> arr = { "bella", "label", "roller","" };
-	vector<string> res = commonChars(arr);
+	vector<string> arr = { "bella", "label", "roller" };
+	vector<string> arr2 = { "october", "september", "november","december"  };
+	vector<string> res = commonChars(arr2);
 
     return 0;
 }
