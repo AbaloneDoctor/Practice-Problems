@@ -4,9 +4,13 @@
 #include "stdafx.h"
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
+//O(N) timing, N is length of all words
+//idea: iterate through each string, add their counts into respective hash arrays of letters and their counts
+//then go through all generated hash arrays, and return a string of the letters with overlap (using essentially min) 
 vector<string> commonChars(vector<string>& A) {
 	vector<vector<int>> hashArray;
 	vector<int> finalCount;
@@ -23,7 +27,8 @@ vector<string> commonChars(vector<string>& A) {
 
 	for (int i = 0; i < hashArray.size(); i++) {
 		for (int j = 0; j < hashArray[i].size(); j++) {
-			if (finalCount[j] > hashArray[i][j]) { finalCount[j] = hashArray[i][j]; }
+			//if (finalCount[j] > hashArray[i][j]) { finalCount[j] = hashArray[i][j]; }
+			finalCount[j] = min(finalCount[j], hashArray[i][j]);
 		}
 	}
 
