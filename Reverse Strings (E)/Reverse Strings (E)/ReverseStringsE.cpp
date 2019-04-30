@@ -42,12 +42,12 @@ void reverseStringStack(vector<char>& s) {
 }
 
 
-//returning a vector of iterator range?
-string reverseStringVectorItr(string s) {
-	//return { s.end(), s.begin() };	//triggers "invalid iterator range"
-//	return { s.rbegin(), s.rend() };
+//returning a range using iterators
+string reverseStringVectorItr(string s) {		//"abcdefg"
+	//return { s.end(), s.begin() };			//triggers "invalid iterator range"
+	return { s.rbegin(), s.rend() };
 	//return string(s.rbegin(), s.rend());		//same solution without string constructor
-	return { s.begin(), s.begin()+2 };
+	//return { s.begin(), s.begin()+2 };		//returns "ab"
 }
 
 int main()
