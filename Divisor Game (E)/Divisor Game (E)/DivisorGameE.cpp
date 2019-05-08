@@ -1,5 +1,9 @@
 // DivisorGameE.cpp : Defines the entry point for the console application.
-//
+//https://leetcode.com/problems/divisor-game/submissions/
+
+//Problem: if given an N, where A chooses a factor that must be 0 < x < N, and SUBTRACTS it from N, 
+//then lets B do the same, and they repeat until they can't choose
+//when is A guaranteed to win?
 
 #include "stdafx.h"
 #include <vector>
@@ -32,14 +36,43 @@ bool divisorGame(int N) {
 	
 	for (int i = 3; i <= N; i++) {
 		bool orRes = 0;
+		
 		for (int j = 1; j < i; j++) {
 			if (i % j == 0) {
 				//checks all factors of i for a true for A
 				//[i-j] is B's result, so ![i-j] is A's
+				int bN = i - j;	//j is the factor A chose, so bN is N after A's choice is subtracted
+
 				orRes = orRes || !(dp[i - j]);
 			}
 		}
 		dp[i] = orRes;
+	}
+	return dp[N];
+}
+
+//07:05 PM - 05.07.19 : Same as above, but with logic more clearly explained
+bool divisorGameExplained(int N) {
+
+	vector<int> dp(N + 1, 0);
+	dp[0] = 0;
+	dp[1] = 0;
+	dp[2] = 1;
+
+	for (int i = 3; i <= N; i++) {
+		bool aWin = false;
+		for (int j = 1; j < i; j++) {				//looking for factors of i
+			if (i % j == 0) {						//A checks each factor of i, looking for a possibility A wins
+				int bN = i - j;						//j is the factor A chose, so bN is N after A's choice is subtracted
+				if (dp[bN] == true) {				//this means for factor j, B wins
+					//do nothing
+				}
+				else if (dp[bN] == false) {			//this means exists a factor which B loses/A wins
+					aWin = true;
+				}
+			}
+		}
+		dp[i] = aWin;								//A chooses the factor that guarantees her win, so if she can win, she will
 	}
 	return dp[N];
 }
